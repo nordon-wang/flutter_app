@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'dart:io';
+// import 'dart:io';
 import 'package:dio/dio.dart';
 
 class LoginPage extends StatelessWidget{
@@ -8,7 +8,7 @@ class LoginPage extends StatelessWidget{
     Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('login'),
+          title: Text('登录'),
           elevation: 0.0,
         ),
         body: Container(
@@ -32,7 +32,7 @@ class _FormRegist extends State<FormRegist>{
   Timer _timer;
 
   // 获取验证码
-  _getYzmCode() async{
+  /* _getYzmCode() async{
     if(_seconds == 0){
       // 1.开启倒计时
       _startTimer();
@@ -46,6 +46,20 @@ class _FormRegist extends State<FormRegist>{
       var req = await httpClient.getUrl(uri);
       // 2.5 关闭请求 等待结果
       var res = await req.close(); // res 最终获取的结果
+    }
+  } */
+  _getYzmCode() async{
+    Dio dio = Dio();
+    final res = await dio.get('https://api.myjson.com/bins/1e5mu0');
+    print(res);
+    if(_seconds == 0){
+      // 1.开启倒计时
+      _startTimer();
+      // 2. 创建http请求 请求短信接口
+      // https://api.myjson.com/bins/1e5mu0
+      // Dio dio = Dio();
+      // final res = await dio.get('https://api.myjson.com/bins/1e5mu0');
+      // print(res);
     }
   }
 
