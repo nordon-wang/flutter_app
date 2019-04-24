@@ -2,13 +2,14 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 // import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:flutter_app/module/pub.dart';
 
 class LoginPage extends StatelessWidget{
   @override
     Widget build(BuildContext context) {
       return Scaffold(
         appBar: AppBar(
-          title: Text('登录'),
+          title: Text('用户登录'),
           elevation: 0.0,
         ),
         body: Container(
@@ -31,6 +32,9 @@ class _FormRegist extends State<FormRegist>{
   int _seconds = 0;
   Timer _timer;
 
+  String username = '';
+  String verityCode = '';
+
   // 获取验证码
   /* _getYzmCode() async{
     if(_seconds == 0){
@@ -49,10 +53,10 @@ class _FormRegist extends State<FormRegist>{
     }
   } */
   _getYzmCode() async{
-    Dio dio = Dio();
-    final res = await dio.get('https://api.myjson.com/bins/1e5mu0');
-    print(res);
-    if(_seconds == 0){
+      PubModule.httpRequest('post', 'custom').then( (res) {
+        print(res);
+      });
+    if(_seconds == 0 && username != ''){
       // 1.开启倒计时
       _startTimer();
       // 2. 创建http请求 请求短信接口
@@ -60,7 +64,20 @@ class _FormRegist extends State<FormRegist>{
       // Dio dio = Dio();
       // final res = await dio.get('https://api.myjson.com/bins/1e5mu0');
       // print(res);
+      PubModule.httpRequest('post', 'getcode').then( (res) {
+        print(res);
+      });
     }
+  }
+
+  // 登录
+  _login() {
+    PubModule.httpRequest('post', 'custom', {
+      "username":username,
+      "verityCode":verityCode
+    }).then( (res) {
+      print(res);
+    });
   }
 
   // 定义 开启定时器 方法
@@ -127,7 +144,9 @@ class _FormRegist extends State<FormRegist>{
                 )
               ),
               onChanged: (value){
-
+                setState(() {
+                  username = value;
+                });
               },
               onSubmitted: (value){
 
@@ -166,7 +185,9 @@ class _FormRegist extends State<FormRegist>{
                         )
                       ),
                       onChanged: (value){
-
+                        setState(() {
+                          verityCode = value;
+                        });
                       },
                       onSubmitted: (value){
 
@@ -203,7 +224,9 @@ class _FormRegist extends State<FormRegist>{
             padding: EdgeInsets.symmetric(horizontal: 10.0),
             margin: EdgeInsets.only(top:20.0),
             child: RaisedButton(
-              onPressed: null,
+              onPressed: username == '' || verityCode == '' ? null : (){
+                _login();
+              },
               child: Text(
                 'login',
                 style: TextStyle(
