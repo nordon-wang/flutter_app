@@ -4,7 +4,11 @@ import 'package:flutter_app/module/config.dart';
 Dio dio = new Dio();
 
 class PubModule {
+  // 请求方法
   static httpRequest(methed, url, [data]) async{
+    // 请求头增加 token
+    dio.options.headers['toen'] = 'token';
+
     try {
       Response response;
       switch (methed) {
@@ -20,5 +24,10 @@ class PubModule {
     } catch (err) {
       print(err);
     }
+  }
+
+  // 校验 token 是否存在
+  static checkToken() async{
+    return 'token' ?? '';
   }
 }

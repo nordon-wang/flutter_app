@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_app/home/home.dart';
 // import 'dart:io';
-import 'package:dio/dio.dart';
+// import 'package:dio/dio.dart';
 import 'package:flutter_app/module/pub.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+ 
 
 class LoginPage extends StatelessWidget{
   @override
@@ -53,9 +56,23 @@ class _FormRegist extends State<FormRegist>{
     }
   } */
   _getYzmCode() async{
-      PubModule.httpRequest('post', 'custom').then( (res) {
-        print(res);
-      });
+    PubModule.httpRequest('get', 'getCode').then( (res) {
+      // print(res.data.code);  报错
+      print(res.data['code']);
+      if(res.data['code'] != 200){
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('发送验证码成功'),
+          )
+        );
+      }else{
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(res.data['msg']),
+          )
+        );
+      }
+    });
     if(_seconds == 0 && username != ''){
       // 1.开启倒计时
       _startTimer();
@@ -72,11 +89,38 @@ class _FormRegist extends State<FormRegist>{
 
   // 登录
   _login() {
+    // 跳转
+    // Navigator.push(context, MaterialPageRoute(
+    //   builder: (context) => Home()
+    // ));
+    // Navigator.pushNamed(context, '/home');
+
+    // 跳转路由，但是不希望跳转之后的页面可以返回
+    Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+
     PubModule.httpRequest('post', 'custom', {
       "username":username,
       "verityCode":verityCode
-    }).then( (res) {
+    }).then( (res) async{
       print(res);
+      // 存储token
+      // SharedPreferences prefs = await SharedPreferences.getInstance();
+      // prefs.setString('token', 'my-token');
+      // print(prefs.getString('token'));
+
+      if(res.data['code'] != 200){
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text('登录'),
+          )
+        );
+      }else{
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            content: Text(res.data['msg']),
+          )
+        );
+      }
     });
   }
 
@@ -107,6 +151,20 @@ class _FormRegist extends State<FormRegist>{
   _cancelTimer(){
     _timer.cancel();
   }
+
+  // 页面初始化 
+  @override
+    void initState() {
+      super.initState();
+    }
+
+  // 页面销毁时
+  @override
+    void dispose() {
+      super.dispose();
+      _cancelTimer();
+    }
+
 
   @override
     Widget build(BuildContext context) {
