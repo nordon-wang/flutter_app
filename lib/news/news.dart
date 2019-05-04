@@ -15,14 +15,14 @@ class _NewsState extends State<News>{
   List channels = [];
 
   _getChannels (){
-    // PubModule.httpRequest('get', 'list').then( (res) {
-    //   // print(res.data.code);  报错
-    //   print(res);
-    // });
-    var data =[{"id":0,"name":"前端"},{"id":1,"name":"html"},{"id":2,"name":"css"},{"id":3,"name":"js"},{"id":4,"name":"vue"},{"id":5,"name":"react"},{"id":6,"name":"angular"}];
+    print('drawList关闭, _getChannels 被调用了');
+    PubModule.httpRequest('get', 'channels').then( (res) {
+      // print(res.data.code);  报错
+      var data =res.data['data'];
 
-    setState(() {
-      channels = data;
+      setState(() {
+        channels = data;
+      });
     });
   }
 
@@ -53,7 +53,7 @@ class _NewsState extends State<News>{
               //   TabBarContent()
               // ],
             ),
-            drawer: DrawList(),
+            drawer: DrawList(_getChannels),
           ),
         );
       }

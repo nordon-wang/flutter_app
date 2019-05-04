@@ -1,25 +1,56 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/module/pub.dart';
 
 class DrawList extends StatefulWidget{
+  final VoidCallback refresh;
+  DrawList(this.refresh);
+
   @override
     _DrawList createState() => _DrawList();
 }
 
 class _DrawList extends State<DrawList>{
+  List userChannels = [];
+  List allChannels = [];
+  String enName = '';
+  String zhName = '';
+  bool isEdite = false;
 
-  // 获取 我的频道 数据
+  // 获取 我的频道 数据  userChannels
   _getUserChannels(){
+    PubModule.httpRequest('get', 'userChannels').then( (res) {
+      var data =res.data['data'];
+      // print(data['channels']);
 
+      setState(() {
+        userChannels = data['channels'];
+      });
+    });
   }
 
   // 获取 频道推荐 数据
   _getAllChannels(){
+    PubModule.httpRequest('get', 'allChannels').then( (res) {
+      var data =res.data['data'];
+      // print(data.channels);
 
+      setState(() {
+        allChannels = data['channels'];
+      });
+    });
   }
 
   // 获取用户信息
   _getUserInfo(){
+    PubModule.httpRequest('get', 'userInfo').then( (res) {
+      var data =res.data['data'];
+      // print(data);
 
+      setState(() {
+        zhName = data['zh_name'];
+        enName = data['en_name'];
+      });
+    });
   }
 
   @override
@@ -30,17 +61,13 @@ class _DrawList extends State<DrawList>{
       _getUserInfo();
     }
 
-  @override
-    void deactivate() {
-      // TODO: implement deactivate
-      super.deactivate();
-    }
+    @override
+      void dispose() {
+        // TODO: implement dispose
+        super.dispose();
+        widget.refresh(); // drawList页面关闭的时候，通过调用 news 的 _getChannels 方法重新获取数据
+      }
 
-  @override
-    void dispose() {
-      // TODO: implement dispose
-      super.dispose();
-    }
 
    @override
       Widget build(BuildContext context) {
@@ -57,7 +84,7 @@ class _DrawList extends State<DrawList>{
                     width: 60.0,
                     height: 60.0,
                     child: CircleAvatar(
-                      child: Text('nordon'),
+                      child: Text(enName),
                     ),
                   ),
                 ),
@@ -81,44 +108,35 @@ class _DrawList extends State<DrawList>{
                     ),
                     borderRadius: BorderRadius.circular(10.0)
                   ),
-                  child: Text(
-                    '编辑', 
-                    style: TextStyle(
-                      color: Colors.red
+                  child: GestureDetector(
+                    onTap: (){
+                      setState(() {
+                        isEdite = !isEdite;
+                      });
+                    },
+                    child: Text(
+                      isEdite ? '完成' : '编辑', 
+                      style: TextStyle(
+                        color: Colors.red
+                      ),
                     ),
-                  ),
+                  )
                 ),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child:Wrap(
                   spacing: 15.0,
-                  children: <Widget>[
-                    Chip(
-                      label: Text('html'),
-                      onDeleted: (){
-
-                      },
-                    ),
-                    Chip(
-                      label: Text('html'),
-                      onDeleted: (){
-
-                      },
-                    ),
-                    Chip(
-                      label: Text('html'),
-                      onDeleted: (){
-
-                      },
-                    ),
-                    Chip(
-                      label: Text('html'),
-                      onDeleted: (){
-
-                      },
-                    ),
-                  ],
+                  children: userChannels.map((value){
+                    return Chip(
+                      label: Text(value['name']),
+                      onDeleted: isEdite ? (){
+                        setState(() {
+                          userChannels.remove(value);
+                        });
+                      } : null,
+                    );
+                  }).toList(),
                 ),
               ),
               ListTile(
@@ -134,8 +152,8 @@ class _DrawList extends State<DrawList>{
                 padding: EdgeInsets.symmetric(horizontal: 15.0),
                 child: Wrap(
                   spacing: 15.0,
-                  children: <Widget>[
-                    FilterChip(
+                  children: allChannels.map((value){
+                    return FilterChip(
                       avatar: CircleAvatar(
                         backgroundColor: Colors.grey,
                         child: Text(
@@ -146,12 +164,34 @@ class _DrawList extends State<DrawList>{
                           ),
                         ),
                       ),
-                      label: Text('css'),
-                      onSelected: (value){
-                        print(value);
+                      label: Text(value['name']),
+                      onSelected: (status){
+                        
+                        setState(() {
+                          allChannels.remove(value);
+                          userChannels.add(value);
+                        });
                       },
-                    )
-                  ],
+                    );
+                  }).toList()
+                  // <Widget>[
+                  //   FilterChip(
+                  //     avatar: CircleAvatar(
+                  //       backgroundColor: Colors.grey,
+                  //       child: Text(
+                  //         '+',
+                  //         style: TextStyle(
+                  //           color: Colors.white,
+                  //           fontSize: 16.0
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     label: Text('css'),
+                  //     onSelected: (value){
+                  //       print(value);
+                  //     },
+                  //   )
+                  // ],
                 ),
               )
             ],

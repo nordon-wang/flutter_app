@@ -20,7 +20,6 @@ class PubModule {
       Response response;
       switch (methed) {
         case 'get':
-          // response = await dio.get('http://localhost:3000/list');
           response = await dio.get(Config.baseUrl + url);
           break;
         case 'post':
@@ -28,14 +27,10 @@ class PubModule {
           break;
         default:
       }
-      print('--response---');
-      print(response);
-      print('===response==');
       return response;
     } catch (err) {
       print('-----err--');
       print(err);
-      print('=====err==');
     }
   }
 

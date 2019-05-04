@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/detail/detail.dart';
+import 'package:flutter_app/module/pub.dart';
 import 'package:flutter_app/news/model/article.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 
 
 class TabBarContent extends StatefulWidget{
-  final int id;
+  final int id; // id 是顶部滑动栏的 索引值，根据不同的所以获取对应的列表数据
   TabBarContent(this.id);
 
   @override
@@ -21,20 +23,25 @@ class _TabBarContent extends State<TabBarContent>{
   _getContent([type]){
     // 根据 id 获取对应的内容
     print(widget.id);
-    List jsonList = [{"id":0,"art_id":1,"title":"title","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":1,"pubdate":"2019-05-04 14:00:00","cover":{"type":0,"images":[""]}},{"id":1,"art_id":1,"title":"Elit nisi enim occaecat enim enim sint cupidatat reprehenderit sunt ullamco proident consectetur.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":1,"pubdate":"2019-05-04 14:00:00","cover":{"type":1,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}},{"id":2,"art_id":1,"title":"Id laboris quis ea reprehenderit laboris aliqua.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":1,"pubdate":"2019-05-04 14:00:00","cover":{"type":3,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png","https://gss2.bdstatic.com/-fo3dSag_xI4khGkpoWK1HF6hhy/baike/c0%3Dbaike80%2C5%2C5%2C80%2C26/sign=d66483fa0f3b5bb5aada28ac57babe5c/c83d70cf3bc79f3d068c6661b6a1cd11728b2976.jpg","https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}},{"id":3,"art_id":1,"title":"Incididunt consectetur ex incididunt proident aliquip amet consectetur.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":1,"pubdate":"2019-05-04 14:00:00","cover":{"type":1,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}},{"id":4,"art_id":1,"title":"Aliquip consequat veniam aliqua in amet exercitation.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":1,"pubdate":"2019-05-04 14:00:00","cover":{"type":1,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}},{"id":5,"art_id":1,"title":"Ea nisi magna dolore ut cillum ipsum.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":0,"pubdate":"2019-05-04 14:00:00","cover":{"type":1,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}},{"id":6,"art_id":1,"title":"Elit reprehenderit eu voluptate non officia eiusmod et voluptate reprehenderit elit dolor.","auth_id":11,"auth_name":"auth_name","comment_count":111,"is_top":0,"pubdate":"2019-05-04 14:00:00","cover":{"type":1,"images":["https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png"]}}];
 
+    PubModule.httpRequest('get', 'articles').then( (res) {
+      // print(res.data.code);  报错
+      var data =res.data['data'];
 
-    List<Article> listData = jsonList.map((value) => Article.fromJson(value)).toList();
-    if(type == 'scroll'){ // 下拉刷新
-      setState(() {
-        _list.addAll(listData);        
-      });
-    }else{ // 正常加载数据
-      setState(() {
-        _list = listData;
-      });
-    }
+      List jsonList = data;
+      List<Article> listData = jsonList.map((value) => Article.fromJson(value)).toList();
 
+      if(type == 'scroll'){ // 下拉刷新
+        setState(() {
+          _list.addAll(listData);        
+        });
+      }else{ // 正常加载数据
+        setState(() {
+          _list = listData;
+        });
+      }
+
+    });
   }
 
   // 下拉刷新
@@ -47,7 +54,6 @@ class _TabBarContent extends State<TabBarContent>{
 
   @override
     void initState() {
-      // TODO: implement initState
       super.initState();
       _getContent();
 
@@ -73,7 +79,15 @@ class _TabBarContent extends State<TabBarContent>{
             child: ListView.builder(
               itemCount: _list.length,
               itemBuilder: (context, index){
-                return NewsItem(_list[index]);
+                return GestureDetector(
+                  onTap: (){
+                    // 跳转至 详情页
+                    Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => DetailPage(_list[index].artId)
+                    ));
+                  },
+                  child: NewsItem(_list[index]),
+                );
               },
               controller: _controller,
             )
