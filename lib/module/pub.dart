@@ -9,13 +9,18 @@ class PubModule {
   // 请求方法
   static httpRequest(methed, url, [data]) async{
     // 请求头增加 token
-    // dio.options.headers['toen'] = 'token';
-    // dio.options.receiveTimeout = 5000;
+    dio.options.headers['token'] = 'token';
+    dio.options.receiveTimeout = 5000;
+    dio.options.headers = {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    };
 
     try {
       Response response;
       switch (methed) {
         case 'get':
+          // response = await dio.get('http://localhost:3000/list');
           response = await dio.get(Config.baseUrl + url);
           break;
         case 'post':
@@ -23,10 +28,14 @@ class PubModule {
           break;
         default:
       }
+      print('--response---');
       print(response);
+      print('===response==');
       return response;
     } catch (err) {
+      print('-----err--');
       print(err);
+      print('=====err==');
     }
   }
 

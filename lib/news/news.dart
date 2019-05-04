@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/module/pub.dart';
 import 'package:flutter_app/news/SearchBox.dart';
+import 'package:flutter_app/news/drawList.dart';
 import 'package:flutter_app/news/tabBarBtn.dart';
 import 'package:flutter_app/news/tabBarContent.dart';
 
@@ -14,7 +15,7 @@ class _NewsState extends State<News>{
   List channels = [];
 
   _getChannels (){
-    // PubModule.httpRequest('get', 'channels').then( (res) {
+    // PubModule.httpRequest('get', 'list').then( (res) {
     //   // print(res.data.code);  报错
     //   print(res);
     // });
@@ -52,6 +53,7 @@ class _NewsState extends State<News>{
               //   TabBarContent()
               // ],
             ),
+            drawer: DrawList(),
           ),
         );
       }

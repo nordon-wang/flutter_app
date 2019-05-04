@@ -8,6 +8,7 @@ class Article {
   int isTop;
   int imgType;
   List images;
+  String pubdate;
 
   Article.fromJson(json){
     artId = json['art_id'];
@@ -18,6 +19,7 @@ class Article {
     isTop = json['is_top'];
     imgType = json['cover']['type'];
     images = json['cover']['images'];
+    pubdate = json['pubdate'];
   }
 
 }
