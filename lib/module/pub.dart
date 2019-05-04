@@ -3,11 +3,14 @@ import 'package:flutter_app/module/config.dart';
 
 Dio dio = new Dio();
 
+//设置代理
+
 class PubModule {
   // 请求方法
   static httpRequest(methed, url, [data]) async{
     // 请求头增加 token
-    dio.options.headers['toen'] = 'token';
+    // dio.options.headers['toen'] = 'token';
+    // dio.options.receiveTimeout = 5000;
 
     try {
       Response response;
@@ -20,6 +23,7 @@ class PubModule {
           break;
         default:
       }
+      print(response);
       return response;
     } catch (err) {
       print(err);

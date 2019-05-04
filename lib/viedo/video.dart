@@ -5,7 +5,7 @@ class Video extends StatelessWidget{
       Widget build(BuildContext context) {
         return Scaffold(
           appBar: AppBar(
-            title: Text('Questions'),
+            title: Text('Video'),
           ),
         );
       }

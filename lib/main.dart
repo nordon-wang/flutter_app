@@ -20,7 +20,8 @@ class App extends StatelessWidget{
       return MaterialApp(
         title: 'pms-头条',
         // home: token != '' ? Home() :LoginPage(),
-        home: LoginPage(),
+        // home: LoginPage(),
+        home: Home(),
         debugShowCheckedModeBanner: false,
         routes: {
           '/home': (context) => Home(),

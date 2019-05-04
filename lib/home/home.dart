@@ -27,19 +27,19 @@ class _Home extends State<Home>{
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              title: Text('首页')
+              title: Text('新闻')
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('首页')
+              icon: Icon(Icons.question_answer),
+              title: Text('问题')
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('首页')
+              icon: Icon(Icons.video_call),
+              title: Text('视频')
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text('首页')
+              icon: Icon(Icons.attach_money),
+              title: Text('用户')
             )
           ],
           type: BottomNavigationBarType.fixed,
