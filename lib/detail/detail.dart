@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/detail/comment.dart';
+import 'package:flutter_app/detail/shareSheet.dart';
+import 'package:flutter_app/module/pub.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class DetailPage extends StatefulWidget{
   final int artId;
@@ -10,18 +14,50 @@ class DetailPage extends StatefulWidget{
 
 // 新闻详情页面
 class _DetailPage extends State<DetailPage>{
+
+  var detail;
+  List recomments;
+
+  _getDetail(){
+    PubModule.httpRequest('get', 'articleDetail?id=${widget.artId}').then((res){
+      setState(() {
+        detail = res.data['data'];
+        recomments = detail['recomments'];
+      });
+    });
+  }
+
+  @override
+    void initState() {
+      super.initState();
+
+      // 延迟1秒
+      Future.delayed(Duration(seconds: 1), (){
+        _getDetail();
+      });
+    }
   @override
     Widget build(BuildContext context) {
       return Scaffold(
-        body: CustomScrollView( // slivers 需要在 CustomScrollView 中
+        body: detail == null ? Center(
+          child: CircularProgressIndicator(),
+        ) : CustomScrollView( // slivers 需要在 CustomScrollView 中
           slivers: <Widget>[
             SliverAppBar(
-              title: Text('Sit non duis mollit ea eu culpa elit mollit non exercitation incididunt adipisicing.'),
+              title: Text(detail['title']),
               actions: <Widget>[
+                // 右上角图标 ...
                 IconButton(
                   icon: Icon(Icons.more_horiz),
                   onPressed: (){
-
+                    // Navigator.pop(context, true);
+                    print('object');
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context){
+                        return ShareSheet();
+                      }
+                    );
                   },
                 )
               ],
@@ -32,7 +68,7 @@ class _DetailPage extends State<DetailPage>{
                 Padding(
                   padding: EdgeInsets.all(10.0),
                   child: Text(
-                    'Et proident id ipsum consequat enim laborum non eu irure esse in.',
+                    detail['title'],
                     style: TextStyle(
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
@@ -66,13 +102,13 @@ class _DetailPage extends State<DetailPage>{
 
                                   },
                                   child: CircleAvatar(
-                                    backgroundImage: NetworkImage('https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png'),
+                                    backgroundImage: NetworkImage(detail['auth_photo']),
                                   ),
                                 ),
                               ),
                               SizedBox(width: 10.0,),
                               Text(
-                                '王耀',
+                                detail['auth_name'],
                                 style: TextStyle(
                                   color: Colors.black,
                                   fontSize: 14.0
@@ -84,9 +120,12 @@ class _DetailPage extends State<DetailPage>{
                             onPressed: (){
 
                             },
-                            icon: Icon(Icons.add, color: Colors.white,),
+                            icon: Icon(
+                              detail['is_followed'] ? Icons.timelapse : Icons.add,
+                              color: Colors.white,
+                            ),
                             label: Text(
-                              '关注',
+                              detail['is_followed'] ? '已关注' : '关注',
                               style: TextStyle(
                                 color: Colors.white
                               ),
@@ -129,7 +168,7 @@ class _DetailPage extends State<DetailPage>{
 
                                 },
                                 child: CircleAvatar(
-                                  backgroundImage: NetworkImage('https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png'),
+                                  backgroundImage: NetworkImage(detail['auth_photo']),
                                 ),
                               ),
                             ),
@@ -138,13 +177,13 @@ class _DetailPage extends State<DetailPage>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '王耀',
+                                  detail['auth_name'],
                                   style: TextStyle(
                                     color: Colors.black
                                   ),
                                 ),
                                 Text(
-                                  '多久之前',
+                                  timeago.format(DateTime.parse(detail['pubdate'])),
                                   style: TextStyle(
                                     color: Colors.grey,
                                     fontSize: 14.0
@@ -158,12 +197,17 @@ class _DetailPage extends State<DetailPage>{
                           onPressed: (){
 
                           },
-                          icon: Icon(Icons.add, color: Colors.white,),
+                          icon: Icon(
+                            detail['is_followed'] ? Icons.timelapse : Icons.add,
+                            color: Colors.white,
+                          ),
                           label: Text(
-                            '关注',
+                            detail['is_followed'] ? '已关注' : '关注',
                             style: TextStyle(
-                              color: Colors.white
+                              color: Colors.white,
                             ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
                           color: Colors.blue,
                           elevation: 0.0,
@@ -181,17 +225,7 @@ class _DetailPage extends State<DetailPage>{
                   padding: EdgeInsets.all(10.0),
                   child: Text(
                     // `````` 使用前后分别三个 ‘ 包裹，可以无视内容的引号和换行
-                    '''
-  Aliqua ea velit "occaecat" 'cillum' nostrud sit. Consectetur exercitation aliquip mollit nulla et nostrud ullamco aliqua ipsum occaecat deserunt exercitation. Est anim proident labore dolore commodo velit ex ea laboris excepteur id aliqua.
-
-  Culpa irure cillum nulla fugiat dolor. Incididunt ipsum ipsum do eiusmod est non cupidatat aute commodo ex pariatur proident nisi. Labore et in veniam sint magna excepteur duis. Laborum consequat sit duis culpa amet eiusmod aliquip deserunt amet ut labore. Dolore consequat culpa ipsum anim do reprehenderit ullamco incididunt mollit ad duis. Consequat minim commodo Lorem qui qui ipsum occaecat.
-
-  Laboris consequat sit nulla consectetur est dolor consequat in velit nisi. Dolore proident dolor voluptate sunt aliquip dolore tempor et mollit ad officia anim. Quis deserunt eu officia dolor. Lorem in sint voluptate cillum officia nulla duis eiusmod ad aliqua exercitation nulla eu.
-
-  Amet sit ex aliquip elit minim dolor veniam. Do nisi laboris eu non adipisicing et qui occaecat sunt est anim elit. Nulla aliqua nulla voluptate aute dolor duis tempor commodo consectetur aliqua laboris tempor. Voluptate dolore duis consequat Lorem adipisicing nulla minim aliqua sunt ullamco aliquip. Non magna fugiat ex nisi non veniam laborum mollit reprehenderit. Fugiat ea incididunt nostrud dolor in aliqua et eu velit. Sunt ullamco nisi cillum fugiat non tempor.
-
-  Id ex sit fugiat voluptate aliqua. Nisi pariatur sit cillum incididunt. Occaecat occaecat sint ea elit id cillum nisi veniam. Irure exercitation nostrud dolor nulla deserunt deserunt sint magna dolor ea elit. Ad ullamco qui dolore cupidatat laborum mollit aliquip quis exercitation voluptate. Sit consequat voluptate consequat eiusmod cillum id dolor consequat et esse commodo cillum fugiat aute.
-                    ''',
+                    '''${detail['content']}''',
                     style: TextStyle(
                       fontSize: 16.0,
                       fontWeight: FontWeight.normal,
@@ -213,52 +247,27 @@ class _DetailPage extends State<DetailPage>{
                       ),
                       SizedBox(height: 10.0,),
                       Wrap(
-                        children: <Widget>[
-                          Container(
-                            margin: EdgeInsets.only(bottom:10.0),
-                            padding: EdgeInsets.only(right: 2.0),
-                            // MediaQuery.of(context).size.width 是获取屏幕的宽度
-                            width: MediaQuery.of(context).size.width / 2 - 20,
-                            child: Text(
-                              'Voluptate laboris ullamco irure amet cupidatat eiusmod quis minim dolor quis exercitation nisi.',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                        children: recomments.map((value){
+                          return GestureDetector(
+                            onTap: (){
+                              print('点击猜你喜欢');
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (context) => DetailPage(value['id'])
+                              ));
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(bottom:10.0),
+                              padding: EdgeInsets.only(right: 2.0),
+                              // MediaQuery.of(context).size.width 是获取屏幕的宽度
+                              width: MediaQuery.of(context).size.width / 2 - 20,
+                              child: Text(
+                                value['title'],
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom:10.0),
-                            padding: EdgeInsets.only(right: 2.0),
-                            // MediaQuery.of(context).size.width 是获取屏幕的宽度
-                            width: MediaQuery.of(context).size.width / 2 - 20,
-                            child: Text(
-                              'Voluptate laboris ullamco irure amet cupidatat eiusmod quis minim dolor quis exercitation nisi.',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom:10.0),
-                            padding: EdgeInsets.only(right: 2.0),
-                            // MediaQuery.of(context).size.width 是获取屏幕的宽度
-                            width: MediaQuery.of(context).size.width / 2 - 20,
-                            child: Text(
-                              'Voluptate laboris ullamco irure amet cupidatat eiusmod quis minim dolor quis exercitation nisi.',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Container(
-                            margin: EdgeInsets.only(bottom:10.0),
-                            padding: EdgeInsets.only(right: 2.0),
-                            // MediaQuery.of(context).size.width 是获取屏幕的宽度
-                            width: MediaQuery.of(context).size.width / 2 - 20,
-                            child: Text(
-                              'Voluptate laboris ullamco irure amet cupidatat eiusmod quis minim dolor quis exercitation nisi.',
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                        ],
+                          );
+                        }).toList()
                       )
                     ],
                   ),
@@ -322,7 +331,8 @@ class _DetailPage extends State<DetailPage>{
                       ),
                     ),
                   ],
-                )
+                ),
+                Comment()
               ])
             )
           ],
