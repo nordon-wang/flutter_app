@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_app/home/home.dart';
 import 'package:flutter_app/login/login.dart';
 import 'package:flutter_app/module/pub.dart';
+import 'package:flutter_app/search/search.dart';
 
 void main() => {
   PubModule.checkToken().then((token){
@@ -25,7 +26,8 @@ class App extends StatelessWidget{
         debugShowCheckedModeBanner: false,
         routes: {
           '/home': (context) => Home(),
-          '/login': (context) => LoginPage()
+          '/login': (context) => LoginPage(),
+          '/search': (context) => SearchPage()
         },
       );
     }
