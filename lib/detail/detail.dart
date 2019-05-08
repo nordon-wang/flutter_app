@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/detail/comment.dart';
 import 'package:flutter_app/detail/shareSheet.dart';
-import 'package:flutter_app/module/pub.dart';
+import 'package:flutter_app/servers/pub.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class DetailPage extends StatefulWidget{

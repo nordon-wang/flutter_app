@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_app/module/config.dart';
+import 'package:flutter_app/servers/config.dart';
 
 Dio dio = new Dio();
 

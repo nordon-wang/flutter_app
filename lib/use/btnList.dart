@@ -20,17 +20,17 @@ class BtnList extends StatelessWidget{
 
             },
             title: Text(
-              '消息通知'
+              '扫一扫'
             ),
             trailing: Icon(Icons.chevron_right),
           ),
           Divider(height: 0,),
           ListTile(
             onTap: (){
-
+              Navigator.pushNamed(context, '/chat');
             },
             title: Text(
-              '消息通知'
+              '聊天室'
             ),
             trailing: Icon(Icons.chevron_right),
           ),

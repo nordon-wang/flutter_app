@@ -22,7 +22,7 @@ class _UserInfo extends State<UserInfo>{
                       width: 60.0,
                       height: 60.0,
                       child: CircleAvatar(
-                        backgroundImage: NetworkImage('https://cdn.jsdelivr.net/gh/flutterchina/website@1.0/images/flutter-mark-square-100.png'),
+                        backgroundImage: NetworkImage('https://wx.qlogo.cn/mmopen/vi_32/C1ZwROol5U2XQCEgpN4dnVXOO74Qwnic4uKq8XTl5tMUTGia6O6f6zlr9stR2M9SXRbmtZyRjPWCibRydicico9biaPg/132'),
                       ),
                     ),
                     SizedBox(width: 14.0,),

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app/module/pub.dart';
+import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/news/SearchBox.dart';
 import 'package:flutter_app/news/drawList.dart';
 import 'package:flutter_app/news/tabBarBtn.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/detail/detail.dart';
-import 'package:flutter_app/module/pub.dart';
+import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/news/model/article.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
