@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/persional/collect.dart';
 
 class UserBtn extends StatelessWidget{
   @override
@@ -28,7 +29,13 @@ class PubBtn extends StatelessWidget{
       return Expanded(
         child: GestureDetector(
           onTap: (){
-            Navigator.pushNamed(context, '/${routerName}');
+            // 静态路由 不能传递参数
+            // Navigator.pushNamed(context, '/${routerName}');
+
+            // 动态路由 可以传递参数
+            Navigator.push(context, MaterialPageRoute(
+              builder: (context) => Collect(str)
+            ));
           },
           child: Column(
             children: <Widget>[
