@@ -30,6 +30,10 @@ dependencies:
   web_socket_channel: ^1.0.12
   redux: ^3.0.0
   flutter_redux: ^0.5.3
+  image_picker: ^0.6.0+2
+  # 通过摄像头获取视频认证
+  # camera: ^0.5.0
+  # video_player: ^0.10.0+8
 
 dev_dependencies:
   flutter_test:
@@ -48,9 +52,10 @@ flutter:
   uses-material-design: true
 
   # To add assets to your application, add an assets section, like this:
-  # assets:
-  #  - images/a_dot_burr.jpeg
-  #  - images/a_dot_ham.jpeg
+  assets:
+   - images/id-card.jpg
+   - images/id-card2.png
+   - images/id-card3.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

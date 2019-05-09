@@ -16,6 +16,12 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>使用图库</string>
+	<key>NSCameraUsageDescription</key>
+	<string>使用摄像头</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>使用麦克风</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>

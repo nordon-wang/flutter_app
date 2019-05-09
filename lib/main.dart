@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app/approve/approve.dart';
 import 'package:flutter_app/chat/chat.dart';
 import 'package:flutter_app/home/home.dart';
+import 'package:flutter_app/imgUpload/imgUpload.dart';
 import 'package:flutter_app/login/login.dart';
+import 'package:flutter_app/persional/collect.dart';
 import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/search/search.dart';
 import 'package:redux/redux.dart';
@@ -50,6 +53,9 @@ class App extends StatelessWidget{
                 '/login': (context) => LoginPage(),
                 '/search': (context) => SearchPage(),
                 '/chat': (context) => Chat(),
+                '/approve': (context) => Approve(),
+                '/imgUpload': (context) => ImgUpload(),
+                '/collect': (context) => Collect(),
               },
             );
           },

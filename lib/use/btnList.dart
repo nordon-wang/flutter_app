@@ -17,10 +17,10 @@ class BtnList extends StatelessWidget{
           Divider(height: 0,),
           ListTile(
             onTap: (){
-
+              Navigator.pushNamed(context, '/approve');
             },
             title: Text(
-              '扫一扫'
+              '实名认证'
             ),
             trailing: Icon(Icons.chevron_right),
           ),
@@ -34,7 +34,17 @@ class BtnList extends StatelessWidget{
             ),
             trailing: Icon(Icons.chevron_right),
           ),
-          Divider(height: 0,)
+          Divider(height: 0,),
+          ListTile(
+            onTap: (){
+
+            },
+            title: Text(
+              '扫一扫'
+            ),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          Divider(height: 0,),
         ],
       );
     }
