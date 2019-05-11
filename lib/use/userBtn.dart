@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_app/persional/collect.dart';
+import 'package:flutter_app/persional/work.dart';
 
 class UserBtn extends StatelessWidget{
   @override
@@ -33,9 +34,16 @@ class PubBtn extends StatelessWidget{
             // Navigator.pushNamed(context, '/${routerName}');
 
             // 动态路由 可以传递参数
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) => Collect(str)
-            ));
+            if(str == '作品'){
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Work(str)
+              ));
+            }else{
+              Navigator.push(context, MaterialPageRoute(
+                builder: (context) => Collect(str)
+              ));
+            }
+
           },
           child: Column(
             children: <Widget>[
