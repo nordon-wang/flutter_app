@@ -35,6 +35,7 @@ dependencies:
   # 通过摄像头获取视频认证
   # camera: ^0.5.0
   # video_player: ^0.10.0+8
+  flutter_swiper: ^1.1.6
 
 dev_dependencies:
   flutter_test:
@@ -57,6 +58,9 @@ flutter:
    - images/id-card.jpg
    - images/id-card2.png
    - images/id-card3.jpg
+   - images/start1.jpeg
+   - images/start2.jpg
+   - images/start3.jpg
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.

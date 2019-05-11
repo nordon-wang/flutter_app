@@ -6,6 +6,8 @@ import 'package:flutter_app/imgUpload/imgUpload.dart';
 import 'package:flutter_app/login/login.dart';
 import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/search/search.dart';
+import 'package:flutter_app/start/start.dart';
+import 'package:flutter_app/start/swiperStart.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_app/redux/init.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -21,6 +23,7 @@ class App extends StatelessWidget{
   final String token;
 
   App(this.token);
+
   // 初始化 redux
   final store = new Store<AppState>(
     appReducer,
@@ -41,7 +44,8 @@ class App extends StatelessWidget{
               title: 'pms-头条',
               // home: token != '' ? Home() :LoginPage(),
               // home: LoginPage(),
-              home: Home(),
+              // home: Start(token),
+              home: SwiperStart(token),
               debugShowCheckedModeBanner: false,
               // theme: ThemeData(
               //   primaryColor: Colors.red
