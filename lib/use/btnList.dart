@@ -7,7 +7,7 @@ class BtnList extends StatelessWidget{
         children: <Widget>[
           ListTile(
             onTap: (){
-
+              Navigator.pushNamed(context, '/message');
             },
             title: Text(
               '消息通知'
@@ -41,6 +41,16 @@ class BtnList extends StatelessWidget{
             },
             title: Text(
               '扫一扫'
+            ),
+            trailing: Icon(Icons.chevron_right),
+          ),
+          Divider(height: 0,),
+          ListTile(
+            onTap: (){
+
+            },
+            title: Text(
+              '系统设置'
             ),
             trailing: Icon(Icons.chevron_right),
           ),

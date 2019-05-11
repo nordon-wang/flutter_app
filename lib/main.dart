@@ -4,6 +4,7 @@ import 'package:flutter_app/chat/chat.dart';
 import 'package:flutter_app/home/home.dart';
 import 'package:flutter_app/imgUpload/imgUpload.dart';
 import 'package:flutter_app/login/login.dart';
+import 'package:flutter_app/message/message.dart';
 import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/search/search.dart';
 import 'package:flutter_app/start/start.dart';
@@ -58,6 +59,7 @@ class App extends StatelessWidget{
                 '/chat': (context) => Chat(),
                 '/approve': (context) => Approve(),
                 '/imgUpload': (context) => ImgUpload(),
+                '/message': (context) => Message(),
               },
             );
           },
