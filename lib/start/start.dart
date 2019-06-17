@@ -16,7 +16,7 @@ class _Start extends State<Start>{
     Future.delayed(Duration(seconds: 3), (){
       // 判断token是否存在 不存在就跳转至登陆页， 否则跳转首页
       print(widget.token);
-      if(widget.token  != null){
+      if(widget.token == null){
         Navigator.pushNamed(context, '/home');
       }else{
         Navigator.pushNamed(context, '/login');

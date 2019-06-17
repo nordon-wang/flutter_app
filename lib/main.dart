@@ -7,7 +7,6 @@ import 'package:flutter_app/login/login.dart';
 import 'package:flutter_app/message/message.dart';
 import 'package:flutter_app/servers/pub.dart';
 import 'package:flutter_app/search/search.dart';
-import 'package:flutter_app/start/start.dart';
 import 'package:flutter_app/start/swiperStart.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_app/redux/init.dart';
